@@ -1,0 +1,31 @@
+#!/bin/bash
+
+
+routes=routes
+
+if [ "$routes" == "routesN" ]
+then
+  test=testN
+else
+  test=test
+fi
+
+OLDIFS=$IFS
+IFS=','
+
+size=$1
+
+for i in 1,2 4,55 4,99 4,100 55,4 55,99 100,4 100,55 100,99 
+
+do
+  set -- $i
+  sudo su
+  python create_instance.py -f /home/twonet/Desktop/$routes/dual_$size_$1_$2.txt &&
+  make opal &&
+  mv build/opal/main.exe images/$test$size-$1-$2.exe
+done
+
+
+IFS=$OLDIFS
+
+#Fix
